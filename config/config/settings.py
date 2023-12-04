@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'accounts',
 ]
 
+# For custom user model
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -130,4 +133,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'voting:index'
 LOGOUT_REDIRECT_URL = 'accounts:login'
 
-# Custom user model

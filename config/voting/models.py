@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from config.settings import AUTH_USER_MODEL as User
 
 # Model for elections
 class Election(models.Model):
