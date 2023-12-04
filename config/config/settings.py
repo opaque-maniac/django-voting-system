@@ -129,3 +129,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirect urls for login and logout
 LOGIN_REDIRECT_URL = 'voting:index'
 LOGOUT_REDIRECT_URL = 'accounts:login'
+
+# Custom user model
