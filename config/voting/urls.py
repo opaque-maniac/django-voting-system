@@ -16,5 +16,5 @@ urlpatterns = [
     path('party/all/', views.all_parties, name='all_parties'),
     path('party/new/', views.new_party, name='new_party'),
     path('election/<int:election_id>/vote/', views.vote, name='vote'),
-    path('election/<int:election_id>/results/', views.results, name='results'),
+    path('election/<int:election_id>/results/', views.election_votes, name='results'),
 ]
