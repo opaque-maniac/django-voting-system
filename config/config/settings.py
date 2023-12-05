@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7hprfsw9qw8(*4ata2o4iu3+i11_u$g42xt(fgu71khhbp^=i8'
+SECRET_KEY = 'django-insecure-b3^r=q8k#3b@&qs8(+h%!u)hb83%#ckb+v_iptb-&8nw6n6po+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'voting',
     'accounts',
+    'polling',
 ]
 
-# For custom user model
-AUTH_USER_MODEL = 'accounts.CustomUser'
+# For the cusom user model
+AUTH_USER_MODEL = 'accounts.  CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,8 +128,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Redirect urls for login and logout
-LOGIN_REDIRECT_URL = 'voting:index'
-LOGOUT_REDIRECT_URL = 'accounts:login'
-
