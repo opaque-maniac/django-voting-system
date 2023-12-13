@@ -1,22 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.utils.translation import gettext_lazy
-
-from .managers import CustomUserManager
+from django.contrib.auth.models import User
 
 # Create your models here.
-class CustomUser(AbstractUser):
-    profile_pic = models.ImageField(upload_to='profile_pic/', null=True, blank=True)
-    is_staff = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    objects = CustomUserManager()
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    first_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
-
+        verbose_name = 'profile'
+        verbose_name_plural = 'profiles'
+    
     def __str__(self):
-        return self.email
+        return f"{self.first_name} {self.last_name}"
