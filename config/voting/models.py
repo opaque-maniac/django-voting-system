@@ -10,6 +10,8 @@ class Candidate(models.Model):
     image = models.ImageField(upload_to='candidate_images/', blank=True, null=True)
     party = models.ForeignKey('Party', on_delete=models.CASCADE)
     election = models.ForeignKey('Election', on_delete=models.CASCADE)
+    vote_count = models.PositiveIntegerField(default=0)
+
 
     class Meta:
         verbose_name = 'candidate'
@@ -34,6 +36,7 @@ class Election(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     has_ended = models.BooleanField(default=False)
+    vote_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = 'election'
