@@ -33,6 +33,7 @@ class Party(models.Model):
 
 class Election(models.Model):
     name = models.CharField(max_length=50)
+    description = models.CharField(max_length=200, blank=True, null=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     has_ended = models.BooleanField(default=False)

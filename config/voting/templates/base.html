@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block meta %}{% endblock meta %}
+    {% block stylesheets %}{% endblock stylesheets %}
+    <title>{% block title %}{% endblock %} | Ballot</title>
+</head>
+<body>
+    <header>
+        <h1>
+            <a href="{% url 'voting:index' %}">Ballot</a>
+        </h1>
+        <nav></nav>
+        <div class="form-container">
+            <form action="{% url 'voting:search' %}" method="GET">
+                <input type="text" name="q" placeholder="Search">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <footer>
+        <p>Ballot &copy; </p>
+        <div class="description">
+            <p>Ballot is a web application that allows you to create polls and vote on them.</p>
+        </div>
+        <div class="social">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+            <a href="#">Email</a>
+        </div>
+    </footer>
+    {% block javascript %}{% endblock javascript %}
+</body>
+</html>

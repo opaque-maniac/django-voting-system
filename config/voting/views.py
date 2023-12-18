@@ -6,12 +6,29 @@ from django.db.models import F, Count
 
 from accounts.models import Profile
 from . import models
+from . import forms
 
 # View for the homepage
 def index(request):
     elections = models.Election.objects.filter()[:5]
     context = { 'elections': elections }
     return render(request, 'voting/index.html', context)
+
+# View for new election page
+@login_required
+def new_election(request):
+    if request.method == 'POST':
+        form = forms.ElectionForm(request.POST)
+        if form.is_valid():
+            election = form.save(commit=False)
+            election.save()
+            return redirect('voting:individual_election', args=(election.id,))
+        else:
+            form.add_error(None, "Invalid form")
+            context = { 'form': form, 'errors': form.errors }
+    else:
+        context = { 'form': forms.ElectionForm() }
+    return render(request, 'voting/new_election.html', context)
 
 # View for the individual elections page
 @login_required
@@ -42,12 +59,44 @@ def individual_election(request, election_id):
         }
     return render(request, 'voting/individual_election.html', context)
 
+# View for new candidate page
+@login_required
+def new_candidate(request):
+    if request.method == 'POST':
+        form = forms.CandidateForm(request.POST, request.FILES)
+        if form.is_valid():
+            candidate = form.save(commit=False)
+            candidate.save()
+            return redirect('voting:individual_candidate', args=(candidate.id,))
+        else:
+            form.add_error(None, "Invalid form")
+            context = { 'form': form, 'errors': form.errors }
+    else:
+        context = { 'form': forms.CandidateForm() }
+    return render(request, 'voting/new_candidate.html', context)
+
 # View for the individual candidate page
 @login_required
 def individual_candidate(request, candidate_id):
     candidate = models.Candidate.objects.get(id=candidate_id)
     context = { 'candidate': candidate }
     return render(request, 'voting/individual_candidate.html', context)
+
+# View for new party page
+@login_required
+def new_party(request):
+    if request.method == 'POST':
+        form = forms.PartyForm(request.POST, request.FILES)
+        if form.is_valid():
+            party = form.save(commit=False)
+            party.save()
+            return redirect('voting:individual_party', args=(party.id,))
+        else:
+            form.add_error(None, "Invalid form")
+            context = { 'form': form, 'errors': form.errors }
+    else:
+        context = { 'form': forms.PartyForm() }
+    return render(request, 'voting/new_party.html', context)
 
 # View for the individual party page
 @login_required
@@ -72,3 +121,15 @@ def vote(request, candidate_id):
         election.vote_count = F('vote_count') + 1
         election.save()
         return redirect('voting:individual_election', args=(election.id,))
+
+# View for the results page
+@login_required
+def search(request):
+    q = request.GET.get('q')
+    if q:
+        elections = models.Election.objects.filter(name__icontains=q)
+        candidates = models.Candidate.objects.filter(first_name__icontains=q) | models.Candidate.objects.filter(last_name__icontains=q)
+        parties = models.Party.objects.filter(name__icontains=q)
+        context = { 'elections': elections, 'candidates': candidates, 'parties': parties }
+    else:
+        return redirect()

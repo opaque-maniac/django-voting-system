@@ -1,0 +1,25 @@
+{% extends 'base.html' %}{% load static %}
+{% block meta %}{% endblock meta  %}
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+    <h1>Elections</h1>
+    {% if elections %}
+        <ul>
+            {% for election in elections %}
+                <li>
+                    <a href="{% url 'voting:detail' election.id %}">
+                        <div class="election-div">
+                            <h2>{{ election.name }}</h2>
+                            <p>{{ election.description }}</p>
+                            <p>{{ election.start_date }}</p>
+                            <p>{{ election.end_date }}</p>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no elections available.</p>
+    {% endif %}
+{% endblock content %}
+{% block javascripts %}{% endblock javascripts %}
