@@ -1,0 +1,46 @@
+div.no-election {
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.election-list-item {
+    text-align: unset;
+}
+
+ul.election-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    border-left: 1px solid #000;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    height: 150px;
+}
+
+li a {
+    text-decoration: none;
+}
+
+li a {
+    margin: 0%;
+    padding: 0%;
+    display: block;
+}
+
+@media (max-width: 575.98px) {
+    /* CSS rules for extra small devices - phones */
+    div.container {
+        width: 95%;
+        text-align: unset;
+        margin-left: 5%;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    /* CSS rules for small devices - tablets and others */
+}

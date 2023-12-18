@@ -17,6 +17,8 @@ def index(request):
 # View for new election page
 @login_required
 def new_election(request):
+    if Profile.objects.get(user=request.user).is_staff == False:
+        raise Http404
     if request.method == 'POST':
         form = forms.ElectionForm(request.POST)
         if form.is_valid():
@@ -62,10 +64,16 @@ def individual_election(request, election_id):
 # View for new candidate page
 @login_required
 def new_candidate(request):
+    if Profile.objects.get(user=request.user).is_staff == False:
+        raise Http404
     if request.method == 'POST':
         form = forms.CandidateForm(request.POST, request.FILES)
         if form.is_valid():
             candidate = form.save(commit=False)
+            if models.Candidate.objects.filter(first_name=candidate.first_name, last_name=candidate.last_name, election=candidate.election).exists():
+                form.add_error(None, "Candidate already exists")
+                context = { 'form': form, 'errors': form.errors }
+                return render(request, 'voting/new_candidate.html', context)
             candidate.save()
             return redirect('voting:individual_candidate', args=(candidate.id,))
         else:
@@ -85,6 +93,8 @@ def individual_candidate(request, candidate_id):
 # View for new party page
 @login_required
 def new_party(request):
+    if Profile.objects.get(user=request.user).is_staff == False:
+        raise Http404
     if request.method == 'POST':
         form = forms.PartyForm(request.POST, request.FILES)
         if form.is_valid():
@@ -126,10 +136,8 @@ def vote(request, candidate_id):
 @login_required
 def search(request):
     q = request.GET.get('q')
-    if q:
-        elections = models.Election.objects.filter(name__icontains=q)
-        candidates = models.Candidate.objects.filter(first_name__icontains=q) | models.Candidate.objects.filter(last_name__icontains=q)
-        parties = models.Party.objects.filter(name__icontains=q)
-        context = { 'elections': elections, 'candidates': candidates, 'parties': parties }
-    else:
-        return redirect()
+    elections = models.Election.objects.filter(name__icontains=q)
+    candidates = models.Candidate.objects.filter(first_name__icontains=q) | models.Candidate.objects.filter(last_name__icontains=q)
+    parties = models.Party.objects.filter(name__icontains=q)
+    context = { 'elections': elections, 'candidates': candidates, 'parties': parties }
+    return render(request, 'voting/search.html', context)

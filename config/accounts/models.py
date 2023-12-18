@@ -7,6 +7,7 @@ class Profile(models.Model):
     image = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=True, null=True)
+    is_staff = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'profile'

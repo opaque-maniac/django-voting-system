@@ -47,6 +47,11 @@ def login_view(request):
         context = { 'form': forms.LoginForm() }
     return render(request, 'accounts/login.html', context)
 
+# View for the login page
+def logout_view(request):
+    logout(request)
+    return redirect('voting:index')
+
 # View for the profile page
 @login_required
 def profile(request):

@@ -1,25 +1,39 @@
 {% extends 'base.html' %}{% load static %}
 {% block meta %}{% endblock meta  %}
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'voting/css/index.css' %}">
+{% endblock stylesheets %}
 {% block content %}
-    <h1>Elections</h1>
-    {% if elections %}
-        <ul>
-            {% for election in elections %}
-                <li>
-                    <a href="{% url 'voting:detail' election.id %}">
-                        <div class="election-div">
-                            <h2>{{ election.name }}</h2>
-                            <p>{{ election.description }}</p>
-                            <p>{{ election.start_date }}</p>
-                            <p>{{ election.end_date }}</p>
-                        </div>
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+    {% if user.is_authenticated %}
+        {% if elections %}
+            <h1 class="title">Elections</h1>
+            <ul class="election-list">
+                {% for election in elections %}
+                    <li class="election-list-item">
+                        <a href="{% url 'voting:individual_election' election.id %}">
+                            <div class="election-div">
+                                <h2>{{ election.name }}</h2>
+                                <p>{{ election.description }}</p>
+                                <p>{{ election.start_date }}</p>
+                                <p>{{ election.end_date }}</p>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="no-election">
+                <h1 class="title">Elections</h1>
+                <p>There are no elections available.</p>
+            </div>
+        {% endif %}
     {% else %}
-        <p>There are no elections available.</p>
+        <p class="paragraph-one">
+            Welcome to Ballot, your go-to platform for a seamless and secure voting experience. Our app is designed to make elections accessible to everyone, ensuring that your voice is heard in a simple and convenient manner.</p>
+        <p class="paragraph-two">
+            Explore our user-friendly interface to stay informed about upcoming elections, candidates, and important issues. Whether you're a first-time voter or a seasoned participant in the democratic process, Ballot empowers you to engage with the electoral system and make informed decisions.</p>
+        <p class="paragraph-three">
+            Ready to take part in shaping the future? Sign up now to unlock additional features, such as personalized voting recommendations and a personalized dashboard to track your electoral participation. Your vote matters, and Ballot is here to make the democratic process more accessible than ever.</p>
     {% endif %}
 {% endblock content %}
-{% block javascripts %}{% endblock javascripts %}
+{% block javascript %}{% endblock javascript %}
